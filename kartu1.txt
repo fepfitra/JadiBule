@@ -1,3 +1,5 @@
-Cat$Kuceng$1
+Cat$Kuceng#1
 Granny$Nenek#1
 Cloud$Awan#0
+Yes$Iya#0
+No$Tidak#0
