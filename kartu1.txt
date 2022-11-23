@@ -3,3 +3,5 @@ Granny$Nenek#1
 Cloud$Awan#0
 Yes$Iya#0
 No$Tidak#0
+What Try$Apa coba#0
+For real$Untuk nyata#0
