@@ -1,7 +1,7 @@
-Cat$Kuceng#1
-Granny$Nenek#1
-Cloud$Awan#0
-Yes$Iya#0
-No$Tidak#0
-What Try$Apa coba#0
-For real$Untuk nyata#0
+Cat$Kuceng#7
+Granny$Nenek#4
+Cloud$Awan#3
+Yes$Iya#2
+No$Tidak#4
+What Try$Apa Coba#1
+What$Apa#0

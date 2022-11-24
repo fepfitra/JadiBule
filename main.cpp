@@ -16,16 +16,16 @@ struct rogerSumatera {
 };
 rogerSumatera kosakata[100000];
 string uppercase(string a) {
-	int panjang=a.length();
-	for (int i=0; i<panjang; i++) {	
-		if (a[i]!=' ') {
-			if (int(a[i])>=97) {
-				a[i]-='a'-'A';
-			}
-		}
-	}
-	return a;
-} 
+  int panjang = a.length();
+  for (int i = 0; i < panjang; i++) {
+    if (a[i] != ' ') {
+      if (int(a[i]) >= 97) {
+        a[i] -= 'a' - 'A';
+      }
+    }
+  }
+  return a;
+}
 void mainMenuTop() {
   cout << "=====\t\tWelcome to JADI BULE !\t\t=====\n\n";
   cout << "Option\t:\n";
@@ -63,23 +63,27 @@ void menuADD() {
   cout << "Enter the input : ";
 }
 
-void save () {
+void save() {
   OFLASHCARD.open("kartu1.txt", ios::trunc);
-  for (int i = 1; i <= indeks; i++) {
-    OFLASHCARD << kosakata[i].vocab << "$" << kosakata[i].arti << "#" << kosakata[i].tingkatHafalan << "\n";
+  for (int i = 0; i < indeks; i++) {
+    cout << kosakata[i].vocab << "$" << kosakata[i].arti << "#"
+         << kosakata[i].tingkatHafalan << "\n";
+    OFLASHCARD << kosakata[i].vocab << "$" << kosakata[i].arti << "#"
+               << kosakata[i].tingkatHafalan << "\n";
   }
   OFLASHCARD.close();
 }
 
 void read() {
   IFLASHCARD.open("kartu1.txt");
+  indeks = 0;
   while (getline(IFLASHCARD, baris)) {
     kosakata[indeks].urutan = indeks;
     kosakata[indeks].vocab = baris.substr(0, baris.find("$"));
     kosakata[indeks].arti = baris.substr(baris.find("$") + 1,
                                          baris.find("#") - baris.find("$") - 1);
     kosakata[indeks].tingkatHafalan = stoi(baris.substr(
-        baris.find("#") + 1, baris.find("%") - baris.find("#") - 1));
+        baris.find("#") + 1, baris.length() - baris.find("#") - 1));
     indeks++;
   }
   IFLASHCARD.close();
@@ -89,60 +93,57 @@ void read() {
   //        << kosakata[i].arti << kosakata[i].tingkatHafalan << endl;
   // }
 }
-void search() {}
+void search() {
+  read();
+}
 void review() {
-  	IFLASHCARD.open("kartu1.txt");
-	 while (getline(IFLASHCARD, baris)) {
-		indeks++;
-		kosakata[indeks].urutan = indeks;
-		kosakata[indeks].vocab = baris.substr(0, baris.find("$"));
-		kosakata[indeks].arti = baris.substr(baris.find("$") + 1, baris.find("#")-baris.find("$")-1);
-		kosakata[indeks].tingkatHafalan = stoi(baris.substr(baris.find("#") + 1, baris.find("%")-baris.find("#")-1));
-     }
-     clearScreen();
-     int tertampil=0;
-     char lanjut='n';
-     nextView:
-     while(lanjut=='n') {
-		 tertampil++;
-		 clearScreen();
-		 cout << "Enter 'n' to view the next vocabulary\n";
-		 cout << "or enter 'g' to go to specific card\n";
-		 cout << "or enter anything else to quit\n\n\n";
-		 cout << "\t"<< uppercase(kosakata[tertampil].vocab) <<endl;
-		 cout << "===========================\n";
-		 cout << "\t"<< uppercase(kosakata[tertampil].arti)<<endl;
-		 buffer();
-		 cout << "Tingkat hafalan :\t" << kosakata[tertampil].tingkatHafalan<<endl;
-		 cout << tertampil <<"/" << indeks << endl << endl;
-		 cout << "Your input : ";
-		 if (tertampil==indeks) {
-			 tertampil=0;
-		 }
-		 cin >> lanjut; 
-	}
-	while (lanjut=='g') {
-		clearScreen();
-		cout << "Enter the number of card order : ";
-		int nomor;
-		cin >> nomor;
-		clearScreen();
-		cout << "Enter 'n' to view the next vocabulary\n";
-		cout << "or enter 'g' to go to specific card\n";
-		cout << "or enter anything else to quit\n\n\n";
-		cout << "\t"<< uppercase(kosakata[nomor-1].vocab) <<endl;
-		cout << "===========================\n";
-		cout << "\t"<< uppercase(kosakata[nomor-1].arti)<<endl;
-		buffer();
-		cout << "Tingkat hafalan :\t" << kosakata[nomor-1].tingkatHafalan<<endl;
-		cout << nomor << "/" << indeks<< endl << endl;
-		cout << "Your Input : ";
-		cin >> lanjut;
-		if (lanjut=='n') {
-			tertampil=nomor;
-			goto nextView;
-		}
-	}
+  read();
+  clearScreen();
+  int tertampil = 0;
+  char lanjut = 'n';
+nextView:
+  while (lanjut == 'n') {
+    
+    clearScreen();
+    cout << "Enter 'n' to view the next vocabulary\n";
+    cout << "or enter 'g' to go to specific card\n";
+    cout << "or enter anything else to quit\n\n\n";
+    cout << "\t" << uppercase(kosakata[tertampil].vocab) << endl;
+    cout << "===========================\n";
+    cout << "\t" << uppercase(kosakata[tertampil].arti) << endl;
+    buffer();
+    cout << "Tingkat hafalan :\t" << kosakata[tertampil].tingkatHafalan << endl;
+    tertampil++;
+    cout << tertampil << "/" << indeks << endl << endl;
+    cout << "Your input : ";
+    
+    if (tertampil == indeks) {
+      tertampil = 0;
+    }
+    cin >> lanjut;
+  }
+  while (lanjut == 'g') {
+    clearScreen();
+    cout << "Enter the number of card order : ";
+    int nomor;
+    cin >> nomor;
+    clearScreen();
+    cout << "Enter 'n' to view the next vocabulary\n";
+    cout << "or enter 'g' to go to specific card\n";
+    cout << "or enter anything else to quit\n\n\n";
+    cout << "\t" << uppercase(kosakata[nomor - 1].vocab) << endl;
+    cout << "===========================\n";
+    cout << "\t" << uppercase(kosakata[nomor - 1].arti) << endl;
+    buffer();
+    cout << "Tingkat hafalan :\t" << kosakata[nomor - 1].tingkatHafalan << endl;
+    cout << nomor << "/" << indeks << endl << endl;
+    cout << "Your Input : ";
+    cin >> lanjut;
+    if (lanjut == 'n') {
+      tertampil = nomor;
+      goto nextView;
+    }
+  }
 }
 
 /*string uppercase(string s) {
@@ -151,68 +152,73 @@ void review() {
   }
   return s;
 }*/
-//pake punya gweh coba 
-// okeh 
-int handleCorrect(int random){
-      cout << "Correct !\n";
-      kosakata[random].tingkatHafalan++;
-      cout << "Tingkat hafalan: " << kosakata[random].tingkatHafalan << endl;
-      cout << "1. Next\n";
-      cout << "2. Back\n";
-      buffer();
-      mainMenuBottom();
-  
-      int pilihan;
-      cin >> pilihan;
-      return pilihan;
+// pake punya gweh coba
+// okeh
+int handleCorrect(int random) {
+  cout << "Correct !\n";
+  kosakata[random].tingkatHafalan++;
+  cout << "Tingkat hafalan: " << kosakata[random].tingkatHafalan << endl;
+  cout << "1. Next\n";
+  cout << "2. Back\n";
+  buffer();
+  mainMenuBottom();
+
+  int pilihan;
+  cin >> pilihan;
+  return pilihan;
 }
-int handleWrong(){
-      cout << "Wrong !\n";
-      cout << "Guess again ?\n";
-      cout << "1. Yes\n";
-      cout << "2. No\n";
-      buffer();
-      mainMenuBottom();
-      int pilihan;
-      cin >> pilihan;
-      return pilihan;
+int handleWrong() {
+  cout << "Wrong !\n";
+  cout << "Guess again ?\n";
+  cout << "1. Yes\n";
+  cout << "2. No\n";
+  buffer();
+  mainMenuBottom();
+  int pilihan;
+  cin >> pilihan;
+  return pilihan;
 }
 
-void pilihTest(int ctx){
-  if (ctx == 1){
+void pilihTest(int ctx) {
+  save(); // pasnya taruh dimana biar bisa nge save terus
+  if (ctx == 1) {
     int random = rand() % indeks;
     clearScreen();
     cout << "========\tEN - ID  \t========\n";
-    cout << "========\t"<<uppercase(kosakata[random].vocab) << "\t========\n";
+    cout << "========\t" << uppercase(kosakata[random].vocab) << "\t========\n";
     cout << "=======================================\n";
     buffer();
     cout << "Your answer : ";
     string input;
-    cin >> input;
-    //getline(cin, input);
     cin.ignore();
-    int pilih = uppercase(input) == uppercase(kosakata[random].arti) ? handleCorrect(random) : handleWrong();
-    if (pilih == 1){
+    getline(cin, input);
+    // cin >> input
+    int pilih = uppercase(input) == uppercase(kosakata[random].arti)
+                    ? handleCorrect(random)
+                    : handleWrong();
+    if (pilih == 1) {
       pilihTest(ctx);
     } else {
-      // balik ke menu
+      save();
     }
-  }
-  else if(ctx == 2){
+  } else if (ctx == 2) {
     int random = rand() % indeks;
     clearScreen();
     cout << "========\tID - EN  \t========\n";
-    cout << "========\t"<<uppercase(kosakata[random].arti) << "\t========\n";
+    cout << "========\t" << uppercase(kosakata[random].arti) << "\t========\n";
     cout << "=======================================\n";
     buffer();
     cout << "Your answer : ";
     string input;
-    cin >> input;
-    int pilih = uppercase(input) == uppercase(kosakata[random].arti) ? handleCorrect(random) : handleWrong();
-    if (pilih == 1){
+    cin.ignore();
+    getline(cin, input);
+    int pilih = uppercase(input) == uppercase(kosakata[random].vocab)
+                    ? handleCorrect(random)
+                    : handleWrong();
+    if (pilih == 1) {
       pilihTest(ctx);
     } else {
-      // balik ke menu
+      save();
     }
   }
 }
